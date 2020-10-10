@@ -21,4 +21,5 @@ public enum EventHandler implements EndTick, CommandRegistrationCallback {
     public void onEndTick(MinecraftServer server) {
 
     }
+
 }

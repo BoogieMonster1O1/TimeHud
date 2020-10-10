@@ -27,10 +27,9 @@ public class TimeHudSponge {
     @Listener
     public void onInitalize(GameInitializationEvent event) {
         instance = this;
-        this.logger.info("Starting TimeHud");
+        this.logger.info("Loading TimeHud");
         CommandManager manager = Sponge.getCommandManager();
         TimeHudManager.load(this.getConfigDir().resolve("timehud.json"));
-        TimeHudManager.save(this.getConfigDir().resolve("timehud.json"));
         TimeHudCommand.register(manager, this);
     }
 

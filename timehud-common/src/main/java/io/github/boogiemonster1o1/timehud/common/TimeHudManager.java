@@ -33,6 +33,7 @@ public class TimeHudManager {
         try {
             if (!Files.exists(path)) {
                 Files.createFile(path);
+                save(path);
                 return;
             }
             INSTANCE = GSON.fromJson(new InputStreamReader(Files.newInputStream(path)), TimeHudManager.class);
