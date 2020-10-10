@@ -1,5 +1,7 @@
 package io.github.boogiemonster1o1.timehud.command;
 
+import java.nio.file.Path;
+
 import io.github.boogiemonster1o1.timehud.common.TimeHudManager;
 import org.spongepowered.api.command.CommandException;
 import org.spongepowered.api.command.CommandManager;
@@ -11,9 +13,10 @@ import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.text.Text;
 
 public class TimeHudCommand {
+
     public static void register(CommandManager manager, Object plugin) {
         CommandSpec spec = CommandSpec.builder()
-                .description(Text.of("Allows Enabling/Disabling TimeHud"))
+                .description(Text.of("/timehud"))
                 .executor(TimeHudCommand::execute)
                 .permission("timehud.command.timehud.permission").build();
         manager.register(plugin, spec, "timehud");
