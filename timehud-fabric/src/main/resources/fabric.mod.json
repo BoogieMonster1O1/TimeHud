@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "TimeHud-fabric",
+  "version": "${version}",
+
+  "name": "TimeHud",
+  "description": "Shows the current time on the hud",
+  "authors": [
+    "BoogieMonster1O1"
+  ],
+  "contact": {},
+
+  "license": "Apache-2.0",
+  "icon": "assets/TimeHud-fabric/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "server": [
+      "io.github.boogiemonster1o1.timehud.client.TimeHudFabric"
+    ]
+  },
+
+          "mixins": [
+        "TimeHud-fabric.mixins.json"
+      ],
+    
+  "depends": {
+    "fabricloader": ">=0.10.1+build.209",
+              "fabric": "*",
+          "minecraft": "1.16.3"
+  }
+}

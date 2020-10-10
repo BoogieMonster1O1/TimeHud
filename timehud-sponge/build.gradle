@@ -1,0 +1,21 @@
+apply plugin: 'org.spongepowered.plugin'
+
+tasks.build.dependsOn tasks.shadowJar
+
+dependencies {
+    implementation project(':timehud-common')
+    compileOnly 'org.spongepowered:spongeapi:7.3.0'
+    annotationProcessor 'org.spongepowered:spongeapi:7.3.0'
+}
+
+sponge {
+    plugin {
+        id = 'timehud-sponge'
+        meta {
+            name = 'TimeHud'
+            version = version
+            description = 'Shows the time on the hud'
+            authors = ['BoogieMonster1O1']
+        }
+    }
+}
