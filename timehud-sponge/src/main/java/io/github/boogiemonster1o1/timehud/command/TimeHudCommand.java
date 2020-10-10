@@ -2,6 +2,7 @@ package io.github.boogiemonster1o1.timehud.command;
 
 import java.nio.file.Path;
 
+import io.github.boogiemonster1o1.timehud.TimeHudSponge;
 import io.github.boogiemonster1o1.timehud.common.TimeHudManager;
 import org.spongepowered.api.command.CommandException;
 import org.spongepowered.api.command.CommandManager;
@@ -13,7 +14,6 @@ import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.text.Text;
 
 public class TimeHudCommand {
-
     public static void register(CommandManager manager, Object plugin) {
         CommandSpec spec = CommandSpec.builder()
                 .description(Text.of("/timehud"))
@@ -27,6 +27,7 @@ public class TimeHudCommand {
             throw new CommandException(Text.of("Can only be executed by a player!"));
         }
         TimeHudManager.getTimeHudManager().handle(source.getName());
+        TimeHudManager.save(TimeHudSponge.instance.getConfigDir().resolve("timehud.json"));
         return CommandResult.success();
     }
 }
