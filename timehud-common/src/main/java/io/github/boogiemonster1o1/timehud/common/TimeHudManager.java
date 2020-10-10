@@ -29,6 +29,10 @@ public class TimeHudManager {
         return true;
     }
 
+    public boolean shouldSend(String username) {
+        return this.usernames.contains(username);
+    }
+
     public static void load(Path path) {
         try {
             if (!Files.exists(path)) {

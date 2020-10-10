@@ -5,6 +5,7 @@ import com.mojang.brigadier.CommandDispatcher;
 
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.command.ServerCommandSource;
+import net.minecraft.text.LiteralText;
 
 import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents.EndTick;
@@ -19,7 +20,9 @@ public enum EventHandler implements EndTick, CommandRegistrationCallback {
 
     @Override
     public void onEndTick(MinecraftServer server) {
-
+        server.getPlayerManager().getPlayerList().forEach(player -> {
+            String time = String.valueOf(player.world.getTimeOfDay());
+            player.sendMessage(new LiteralText(time), true);
+        });
     }
-
 }

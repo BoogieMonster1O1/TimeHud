@@ -1,7 +1,5 @@
 package io.github.boogiemonster1o1.timehud.command;
 
-import java.nio.file.Path;
-
 import io.github.boogiemonster1o1.timehud.TimeHudSponge;
 import io.github.boogiemonster1o1.timehud.common.TimeHudManager;
 import org.spongepowered.api.command.CommandException;

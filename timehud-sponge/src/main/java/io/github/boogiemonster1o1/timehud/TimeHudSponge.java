@@ -11,10 +11,16 @@ import org.spongepowered.api.command.CommandManager;
 import org.spongepowered.api.config.ConfigDir;
 import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.game.state.GameInitializationEvent;
+import org.spongepowered.api.event.game.state.GameStartedServerEvent;
 import org.spongepowered.api.plugin.Plugin;
+import org.spongepowered.api.scheduler.Task;
+import org.spongepowered.api.text.Text;
+import org.spongepowered.api.text.chat.ChatTypes;
 
 @Plugin(id = "timehud-sponge")
 public class TimeHudSponge {
+    private static final TimeHudManager TIME_HUD_MANAGER = TimeHudManager.getTimeHudManager();
+
     @Inject
     private Logger logger;
 
@@ -31,6 +37,19 @@ public class TimeHudSponge {
         CommandManager manager = Sponge.getCommandManager();
         TimeHudManager.load(this.getConfigDir().resolve("timehud.json"));
         TimeHudCommand.register(manager, this);
+    }
+
+    @Listener
+    public void onServerStart(GameStartedServerEvent event) {
+        Task.builder().intervalTicks(1L).execute(this::sendMessage).submit(this);
+    }
+
+    private void sendMessage() {
+        Sponge.getGame().getServer().getOnlinePlayers().forEach(player -> {
+            if (TIME_HUD_MANAGER.shouldSend(player.getName())) {
+                player.sendMessage(ChatTypes.ACTION_BAR, Text.of(player.getWorld().getProperties().getWorldTime()));
+            }
+        });
     }
 
     public Path getConfigDir() {
