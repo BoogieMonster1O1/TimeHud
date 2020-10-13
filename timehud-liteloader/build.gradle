@@ -14,8 +14,13 @@ buildscript {
 apply plugin: 'java'
 apply plugin: 'net.minecraftforge.gradle.liteloader'
 
+configurations {
+    shade
+    implementation.extendsFrom shade
+}
+
 dependencies {
-    implementation project(':timehud-common')
+    shade project(':timehud-common')
 }
 
 minecraft {
@@ -46,6 +51,12 @@ jar {
     baseName = archivesBaseName
 
     from litemod.outputs
+
+    configurations.shade.each { dep ->
+        from(project.zipTree(dep)){
+            exclude 'META-INF', 'META-INF/**'
+        }
+    }
 }
 
 task deobfJar(type: Jar) {
