@@ -1,0 +1,4 @@
+timehud.disabled=Disabled TimeHud
+timehud.enabled=Enabled TimeHud
+timehud.config.screen.title=TimeHud Configuration
+timehud.config.enable=Enable

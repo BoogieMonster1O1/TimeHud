@@ -21,17 +21,20 @@ import java.nio.file.Path;
 
 import io.github.boogiemonster1o1.timehud.common.TimeFormatter;
 import io.github.boogiemonster1o1.timehud.common.TimeHudManager;
+import io.github.boogiemonster1o1.timehud.config.TimeHudConfigPanel;
+import com.mumfrey.liteloader.Configurable;
 import com.mumfrey.liteloader.HUDRenderListener;
 import com.mumfrey.liteloader.LiteMod;
 import com.mumfrey.liteloader.OutboundChatFilter;
+import com.mumfrey.liteloader.modconfig.ConfigPanel;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 
-public class LiteModTimeHud implements LiteMod, HUDRenderListener, OutboundChatFilter {
-    private static Path configPath;
+public class LiteModTimeHud implements LiteMod, HUDRenderListener, OutboundChatFilter, Configurable {
+    public static Path configPath;
 
     @Override
     public String getVersion() {
@@ -39,9 +42,9 @@ public class LiteModTimeHud implements LiteMod, HUDRenderListener, OutboundChatF
     }
 
     @Override
-    public void init(File configPath) {
-        LiteModTimeHud.configPath = configPath.toPath();
-        TimeHudManager.load(LiteModTimeHud.configPath);
+    public void init(File ignored) {
+        configPath = Minecraft.getMinecraft().gameDir.toPath().resolve("timehud.json");
+        TimeHudManager.load(configPath);
     }
 
     @Override
@@ -79,5 +82,10 @@ public class LiteModTimeHud implements LiteMod, HUDRenderListener, OutboundChatF
             return false;
         }
         return true;
+    }
+
+    @Override
+    public Class<? extends ConfigPanel> getConfigPanelClass() {
+        return TimeHudConfigPanel.class;
     }
 }
