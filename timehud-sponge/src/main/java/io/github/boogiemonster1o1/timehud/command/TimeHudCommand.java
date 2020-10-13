@@ -16,7 +16,8 @@ public class TimeHudCommand {
         CommandSpec spec = CommandSpec.builder()
                 .description(Text.of("/timehud"))
                 .executor(TimeHudCommand::execute)
-                .permission("timehud.command.timehud.permission").build();
+                .permission("timehud.command.timehud.permission")
+                .build();
         manager.register(plugin, spec, "timehud");
     }
 
