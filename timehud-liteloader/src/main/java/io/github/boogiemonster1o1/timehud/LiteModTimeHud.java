@@ -3,12 +3,14 @@ package io.github.boogiemonster1o1.timehud;
 import java.io.File;
 
 import io.github.boogiemonster1o1.timehud.common.TimeFormatter;
+import io.github.boogiemonster1o1.timehud.common.TimeHudManager;
 import com.mumfrey.liteloader.HUDRenderListener;
 import com.mumfrey.liteloader.LiteMod;
+import com.mumfrey.liteloader.OutboundChatFilter;
 
 import net.minecraft.client.Minecraft;
 
-public class LiteModTimeHud implements LiteMod, HUDRenderListener {
+public class LiteModTimeHud implements LiteMod, HUDRenderListener, OutboundChatFilter {
     @Override
     public String getVersion() {
         return "@VERSION";
@@ -36,5 +38,14 @@ public class LiteModTimeHud implements LiteMod, HUDRenderListener {
         long time = Minecraft.getMinecraft().world.getWorldTime();
         String formattedTime = TimeFormatter.format(time);
         Minecraft.getMinecraft().ingameGUI.setOverlayMessage(formattedTime, false);
+    }
+
+    @Override
+    public boolean onSendChatMessage(String message) {
+        if (message.equals("/timehud")) {
+            TimeHudManager.getTimeHudManager().handle(Minecraft.getMinecraft().player.getGameProfile().getName());
+            return false;
+        }
+        return true;
     }
 }
