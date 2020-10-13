@@ -39,6 +39,8 @@ subprojects {
         from "LICENSE"
     }
 
+    tasks.jar.dependsOn(licenseFormat)
+
     shadowJar {
         dependencies {
             include(dependency(':TimeHud-common'))
