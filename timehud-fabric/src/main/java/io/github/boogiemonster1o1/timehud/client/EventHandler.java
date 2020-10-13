@@ -1,6 +1,7 @@
 package io.github.boogiemonster1o1.timehud.client;
 
 import io.github.boogiemonster1o1.timehud.client.command.TimeHudCommand;
+import io.github.boogiemonster1o1.timehud.common.TimeFormatter;
 import io.github.boogiemonster1o1.timehud.common.TimeHudManager;
 import com.mojang.brigadier.CommandDispatcher;
 
@@ -21,9 +22,13 @@ public enum EventHandler implements EndTick, CommandRegistrationCallback {
 
     @Override
     public void onEndTick(MinecraftServer server) {
-        server.getPlayerManager().getPlayerList().stream().filter(player -> TimeHudManager.getTimeHudManager().shouldSend(player.getGameProfile().getName())).forEach(player -> {
-            String time = String.valueOf(player.world.getTimeOfDay());
-            player.sendMessage(new LiteralText(time), true);
-        });
+        server.getPlayerManager()
+                .getPlayerList()
+                .stream()
+                .filter(player -> TimeHudManager.getTimeHudManager().shouldSend(player.getGameProfile().getName()))
+                .forEach(player -> {
+                    String time = TimeFormatter.format(player.world.getTimeOfDay());
+                    player.sendMessage(new LiteralText(time), true);
+                });
     }
 }

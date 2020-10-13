@@ -3,6 +3,7 @@ package io.github.boogiemonster1o1.timehud;
 import java.nio.file.Path;
 
 import io.github.boogiemonster1o1.timehud.command.TimeHudCommand;
+import io.github.boogiemonster1o1.timehud.common.TimeFormatter;
 import io.github.boogiemonster1o1.timehud.common.TimeHudManager;
 import com.google.inject.Inject;
 import org.slf4j.Logger;
@@ -45,11 +46,15 @@ public class TimeHudSponge {
     }
 
     private void sendMessage() {
-        Sponge.getGame().getServer().getOnlinePlayers().forEach(player -> {
-            if (TIME_HUD_MANAGER.shouldSend(player.getName())) {
-                player.sendMessage(ChatTypes.ACTION_BAR, Text.of(player.getWorld().getProperties().getWorldTime()));
-            }
-        });
+        Sponge.getGame()
+                .getServer()
+                .getOnlinePlayers()
+                .stream()
+                .filter(player -> TIME_HUD_MANAGER.shouldSend(player.getName()))
+                .forEach(player -> {
+                    String time = TimeFormatter.format(player.getWorld().getProperties().getWorldTime());
+                    player.sendMessage(ChatTypes.ACTION_BAR, Text.of(time));
+                });
     }
 
     public Path getConfigDir() {
