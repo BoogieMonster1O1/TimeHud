@@ -1,0 +1,58 @@
+buildscript {
+    repositories {
+        jcenter()
+        maven {
+            name = "forge"
+            url = "http://files.minecraftforge.net/maven"
+        }
+    }
+    dependencies {
+        classpath "net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT"
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'net.minecraftforge.gradle.liteloader'
+
+dependencies {
+    implementation project(':timehud-common')
+}
+
+minecraft {
+    version = '1.12.2'
+    mappings = 'stable_39'
+    runDir = 'run'
+    makeObfSourceJar = false
+    ext.mod_version = project.version
+
+    replaceIn "LiteModTimeHud.java"
+    replace "@VERSION", project.version
+}
+
+archivesBaseName = 'timehud-liteloader'
+
+litemod {
+    json {
+        name = 'timehud'
+        displayName = 'TimeHud'
+        mcversion = '1.12.2'
+        version = project.version
+        author = 'BoogieMonster1O1'
+    }
+}
+
+jar {
+    classifier = ""
+    baseName = archivesBaseName
+
+    from litemod.outputs
+}
+
+task deobfJar(type: Jar) {
+    from sourceSets.main.output
+    classifier = 'dev'
+}
+
+artifacts {
+    archives deobfJar
+}

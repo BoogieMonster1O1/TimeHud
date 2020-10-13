@@ -3,7 +3,8 @@ apply plugin: 'fabric-loom'
 archivesBaseName = 'TimeHud-fabric'
 
 tasks.remapJar.dependsOn(shadowJar)
-(tasks.remapJar.input as FileSystemLocationProperty<? extends FileSystemLocation>).set(shadowJar.archivePath)
+//(tasks.remapJar.input as FileSystemLocationProperty<? extends FileSystemLocation>).set(shadowJar.archivePath)
+tasks.remapJar.setInput(shadowJar.archivePath)
 
 dependencies {
     implementation project(':timehud-common')
