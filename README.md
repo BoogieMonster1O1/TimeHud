@@ -9,3 +9,4 @@ A server side mod for Fabric and Sponge that displays the current time in the `H
 
 ### Contributing
 - Please create appropriate unit tests if adding code to the `timehud-common` module
+- Run the `licenseFormatAll` gradle task to apply license headers to each file
