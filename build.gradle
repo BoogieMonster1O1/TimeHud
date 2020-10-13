@@ -43,7 +43,7 @@ subprojects {
 
     shadowJar {
         dependencies {
-            include(dependency(':TimeHud-common'))
+            include(dependency(':timehud-common'))
         }
     }
 
