@@ -59,6 +59,8 @@ public class TimeHudManager {
             INSTANCE = GSON.fromJson(new InputStreamReader(Files.newInputStream(path)), TimeHudManager.class);
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (RuntimeException e) {
+            save(path);
         }
     }
 

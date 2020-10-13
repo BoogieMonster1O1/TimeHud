@@ -25,6 +25,9 @@ import com.mumfrey.liteloader.LiteMod;
 import com.mumfrey.liteloader.OutboundChatFilter;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextFormatting;
 
 public class LiteModTimeHud implements LiteMod, HUDRenderListener, OutboundChatFilter {
     @Override
@@ -34,6 +37,7 @@ public class LiteModTimeHud implements LiteMod, HUDRenderListener, OutboundChatF
 
     @Override
     public void init(File configPath) {
+        TimeHudManager.load(configPath.toPath());
     }
 
     @Override
@@ -61,7 +65,12 @@ public class LiteModTimeHud implements LiteMod, HUDRenderListener, OutboundChatF
     @Override
     public boolean onSendChatMessage(String message) {
         if (message.equals("/timehud")) {
-            TimeHudManager.getTimeHudManager().handle(Minecraft.getMinecraft().player.getGameProfile().getName());
+            boolean removed = TimeHudManager.getTimeHudManager().handle(Minecraft.getMinecraft().player.getGameProfile().getName());
+            if (removed) {
+                Minecraft.getMinecraft().player.sendMessage(new TextComponentString(TextFormatting.RED + I18n.format("timehud.disabled")));
+            } else {
+                Minecraft.getMinecraft().player.sendMessage(new TextComponentString(TextFormatting.GREEN + I18n.format("timehud.enabled")));
+            }
             return false;
         }
         return true;
