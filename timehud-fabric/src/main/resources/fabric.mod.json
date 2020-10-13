@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "id": "TimeHud-fabric",
+  "id": "timehud-fabric",
   "version": "${version}",
 
   "name": "TimeHud",
@@ -11,7 +11,6 @@
   "contact": {},
 
   "license": "Apache-2.0",
-  "icon": "assets/TimeHud-fabric/icon.png",
 
   "environment": "*",
   "entrypoints": {
@@ -19,14 +18,13 @@
       "io.github.boogiemonster1o1.timehud.client.TimeHudFabric"
     ]
   },
-
-          "mixins": [
-        "TimeHud-fabric.mixins.json"
-      ],
+  "mixins": [
+    "TimeHud-fabric.mixins.json"
+  ],
     
   "depends": {
     "fabricloader": ">=0.10.1+build.209",
-              "fabric": "*",
-          "minecraft": "1.16.3"
+    "fabric": "*",
+    "minecraft": "1.16.3"
   }
 }
