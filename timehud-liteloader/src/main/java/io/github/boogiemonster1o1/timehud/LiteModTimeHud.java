@@ -35,9 +35,11 @@ public class LiteModTimeHud implements LiteMod, HUDRenderListener, OutboundChatF
 
     @Override
     public void onPostRenderHUD(int screenWidth, int screenHeight) {
-        long time = Minecraft.getMinecraft().world.getWorldTime();
-        String formattedTime = TimeFormatter.format(time);
-        Minecraft.getMinecraft().ingameGUI.setOverlayMessage(formattedTime, false);
+        if (TimeHudManager.getTimeHudManager().shouldSend(Minecraft.getMinecraft().player.getGameProfile().getName())) {
+            long time = Minecraft.getMinecraft().world.getWorldTime();
+            String formattedTime = TimeFormatter.format(time);
+            Minecraft.getMinecraft().ingameGUI.setOverlayMessage(formattedTime, false);
+        }
     }
 
     @Override
