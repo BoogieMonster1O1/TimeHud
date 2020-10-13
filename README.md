@@ -2,6 +2,9 @@
 
 A server side mod for Fabric and Sponge that displays the current time in the `HH:MM` format in the actionbar title. 
 
+The Fabric and Sponge implementations should only be used on dedicated servers.
+The Liteloader implementation is client only.
+
 ### Building
 - Fork and clone this repository.
 - Run `./gradlew build`.
