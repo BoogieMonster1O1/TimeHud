@@ -17,6 +17,7 @@
 package io.github.boogiemonster1o1.timehud;
 
 import java.io.File;
+import java.nio.file.Path;
 
 import io.github.boogiemonster1o1.timehud.common.TimeFormatter;
 import io.github.boogiemonster1o1.timehud.common.TimeHudManager;
@@ -30,6 +31,8 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 
 public class LiteModTimeHud implements LiteMod, HUDRenderListener, OutboundChatFilter {
+    private static Path configPath;
+
     @Override
     public String getVersion() {
         return "@VERSION";
@@ -37,7 +40,8 @@ public class LiteModTimeHud implements LiteMod, HUDRenderListener, OutboundChatF
 
     @Override
     public void init(File configPath) {
-        TimeHudManager.load(configPath.toPath());
+        LiteModTimeHud.configPath = configPath.toPath();
+        TimeHudManager.load(LiteModTimeHud.configPath);
     }
 
     @Override
@@ -71,6 +75,7 @@ public class LiteModTimeHud implements LiteMod, HUDRenderListener, OutboundChatF
             } else {
                 Minecraft.getMinecraft().player.sendMessage(new TextComponentString(TextFormatting.GREEN + I18n.format("timehud.enabled")));
             }
+            TimeHudManager.save(configPath);
             return false;
         }
         return true;
