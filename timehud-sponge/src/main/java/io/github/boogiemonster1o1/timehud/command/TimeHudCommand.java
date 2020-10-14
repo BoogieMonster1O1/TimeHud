@@ -40,7 +40,11 @@ public class TimeHudCommand {
         if (!(source instanceof Player)) {
             throw new CommandException(Text.of("Can only be executed by a player!"));
         }
-        TimeHudManager.getTimeHudManager().handle(source.getName());
+        if (TimeHudManager.getTimeHudManager().handle(source.getName())) {
+            source.sendMessage(Text.of("§cDisabled TimeHud"));
+        } else {
+            source.sendMessage(Text.of("§aEnabled TimeHud"));
+        }
         TimeHudManager.save(TimeHudSponge.instance.getConfigDir().resolve("timehud.json"));
         return CommandResult.success();
     }
