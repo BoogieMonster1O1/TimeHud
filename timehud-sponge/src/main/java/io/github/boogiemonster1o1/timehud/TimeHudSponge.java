@@ -29,6 +29,7 @@ import org.spongepowered.api.config.ConfigDir;
 import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.game.state.GameInitializationEvent;
 import org.spongepowered.api.event.game.state.GameStartedServerEvent;
+import org.spongepowered.api.event.game.state.GameStoppingServerEvent;
 import org.spongepowered.api.plugin.Plugin;
 import org.spongepowered.api.scheduler.Task;
 import org.spongepowered.api.text.Text;
@@ -40,6 +41,8 @@ public class TimeHudSponge {
 
     @Inject
     private Logger logger;
+
+    private Task task;
 
     @Inject
     @ConfigDir(sharedRoot = true)
@@ -58,7 +61,12 @@ public class TimeHudSponge {
 
     @Listener
     public void onServerStart(GameStartedServerEvent event) {
-        Task.builder().intervalTicks(1L).execute(this::sendMessage).submit(this);
+        this.task = Task.builder().intervalTicks(1L).name("TimeHud Message Loop").execute(this::sendMessage).submit(this);
+    }
+
+    @Listener
+    public void onServerStopping(GameStoppingServerEvent event) {
+        this.task.cancel();
     }
 
     private void sendMessage() {
